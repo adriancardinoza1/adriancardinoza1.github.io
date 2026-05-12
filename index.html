@@ -3,342 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adrian Cardinoza — Marketing Operations</title>
+<title>Adrian Cardinoza - Marketing Operations</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #0d0d0d;
     --paper: #f5f2ec;
     --accent: #c8602a;
-    --accent2: #2a6cc8;
     --muted: #6b6560;
     --rule: #d9d4cc;
     --card: #ffffff;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: var(--paper);
-    border-bottom: 1px solid var(--rule);
-    padding: 14px 48px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .nav-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px; letter-spacing: -0.02em; color: var(--ink);
-    text-decoration: none;
-  }
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 14px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 18px; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
   .nav-links { display: flex; gap: 32px; }
-  .nav-links a {
-    font-size: 13px; font-weight: 500; color: var(--muted);
-    text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
-    transition: color 0.2s;
-  }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
   .nav-links a:hover { color: var(--accent); }
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    padding: 140px 48px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .hero-eyebrow {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 20px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .hero-eyebrow::before {
-    content: ''; display: block;
-    width: 32px; height: 1px; background: var(--accent);
-  }
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(48px, 6vw, 80px);
-    line-height: 1.0;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-    margin-bottom: 24px;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-  .hero-tagline {
-    font-size: 17px; color: var(--muted); font-weight: 300;
-    line-height: 1.7; margin-bottom: 36px;
-    max-width: 420px;
-  }
-  .hero-cta {
-    display: flex; gap: 16px; flex-wrap: wrap;
-  }
-  .btn {
-    padding: 13px 28px; border-radius: 4px;
-    font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
-    text-transform: uppercase; text-decoration: none;
-    cursor: pointer; border: none; transition: all 0.2s;
-    display: inline-block;
-  }
+  /* HERO */
+  .hero { min-height: 100vh; padding: 140px 48px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; max-width: 1200px; margin: 0 auto; }
+  .hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(48px, 6vw, 80px); line-height: 1.0; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 24px; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-tagline { font-size: 17px; color: var(--muted); font-weight: 300; line-height: 1.7; margin-bottom: 36px; max-width: 420px; }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn { padding: 13px 28px; border-radius: 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; display: inline-block; }
   .btn-primary { background: var(--ink); color: var(--paper); }
   .btn-primary:hover { background: var(--accent); }
-  .btn-outline {
-    background: transparent; color: var(--ink);
-    border: 1.5px solid var(--ink);
-  }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
   .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* Hero right — stat block */
-  .hero-stats {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-  }
-  .stat-box {
-    background: var(--card);
-    padding: 32px 28px;
-    border: 1px solid var(--rule);
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.5s forwards;
-  }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .stat-box { background: var(--card); padding: 32px 28px; border: 1px solid var(--rule); position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); animation: fadeUp 0.5s forwards; }
   .stat-box:nth-child(1) { animation-delay: 0.1s; border-radius: 12px 0 0 0; }
   .stat-box:nth-child(2) { animation-delay: 0.2s; border-radius: 0 12px 0 0; }
   .stat-box:nth-child(3) { animation-delay: 0.3s; border-radius: 0 0 0 12px; }
   .stat-box:nth-child(4) { animation-delay: 0.4s; border-radius: 0 0 12px 0; }
-  .stat-box::before {
-    content: ''; position: absolute; top: 0; left: 0;
-    width: 3px; height: 100%; background: var(--accent);
-    transform: scaleY(0); transform-origin: top;
-    transition: transform 0.3s;
-  }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); transform: scaleY(0); transform-origin: top; transition: transform 0.3s; }
   .stat-box:hover::before { transform: scaleY(1); }
-  .stat-number {
-    font-family: 'DM Serif Display', serif;
-    font-size: 44px; line-height: 1;
-    color: var(--ink); margin-bottom: 6px;
-    letter-spacing: -0.02em;
-  }
+  .stat-number { font-family: 'DM Serif Display', serif; font-size: 44px; line-height: 1; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.02em; }
   .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; line-height: 1.4; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
-  @keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── SECTIONS ── */
+  /* SECTIONS */
   section { padding: 96px 48px; max-width: 1200px; margin: 0 auto; }
-  .section-rule {
-    display: flex; align-items: center; gap: 16px;
-    margin-bottom: 56px;
-  }
-  .section-rule span {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--muted); white-space: nowrap;
-  }
-  .section-rule::after {
-    content: ''; flex: 1; height: 1px; background: var(--rule);
-  }
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(32px, 4vw, 48px);
-    line-height: 1.1; letter-spacing: -0.02em;
-    color: var(--ink); margin-bottom: 16px;
-  }
+  .section-rule { display: flex; align-items: center; gap: 16px; margin-bottom: 56px; }
+  .section-rule span { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .section-rule::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 16px; }
   .section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 48px; }
 
-  /* ── ABOUT ── */
+  /* ABOUT */
   .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
   .about-left { position: sticky; top: 100px; }
-  .about-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--accent);
-    margin-bottom: 12px;
-  }
+  .about-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
   .skills-list { display: flex; flex-direction: column; gap: 10px; margin-top: 32px; }
-  .skill-item {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0; border-bottom: 1px solid var(--rule);
-    font-size: 13px;
-  }
+  .skill-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
   .skill-name { font-weight: 500; }
-  .skill-tag {
-    font-size: 11px; padding: 3px 10px; border-radius: 20px;
-    background: #0d0d0d10; color: var(--muted); font-weight: 500;
-  }
+  .skill-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #0d0d0d10; color: var(--muted); font-weight: 500; }
   .skill-tag.core { background: var(--accent)18; color: var(--accent); }
-
-  .about-right p {
-    font-size: 17px; line-height: 1.8; color: #3d3a36;
-    margin-bottom: 24px; font-weight: 300;
-  }
+  .about-right p { font-size: 17px; line-height: 1.8; color: #3d3a36; margin-bottom: 24px; font-weight: 300; }
   .about-right p strong { font-weight: 600; color: var(--ink); }
 
-  /* ── EXPERIENCE ── */
-  .exp-list { display: flex; flex-direction: column; gap: 0; }
-  .exp-item {
-    display: grid; grid-template-columns: 180px 1fr;
-    gap: 40px; padding: 40px 0;
-    border-bottom: 1px solid var(--rule);
-  }
+  /* CERT BADGE */
+  .cert-badge { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; margin-top: 28px; text-decoration: none; transition: border-color 0.2s; }
+  .cert-badge:hover { border-color: var(--accent); }
+  .cert-logo { width: 36px; height: 36px; flex-shrink: 0; }
+  .cert-info { flex: 1; }
+  .cert-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .cert-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .cert-arrow { font-size: 14px; color: var(--muted); }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp-item { display: grid; grid-template-columns: 180px 1fr; gap: 40px; padding: 40px 0; border-bottom: 1px solid var(--rule); }
   .exp-item:last-child { border-bottom: none; }
-  .exp-meta { }
   .exp-date { font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 6px; }
-  .exp-company {
-    font-size: 13px; font-weight: 600; color: var(--ink);
-    margin-bottom: 4px;
-  }
-  .exp-badge {
-    display: inline-block; font-size: 10px; padding: 2px 8px;
-    border-radius: 3px; background: var(--ink); color: var(--paper);
-    font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
-    margin-top: 8px;
-  }
-  .exp-role {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px; color: var(--ink); margin-bottom: 12px;
-    letter-spacing: -0.01em;
-  }
+  .exp-company { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .exp-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 3px; background: var(--ink); color: var(--paper); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 8px; }
+  .exp-role { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--ink); margin-bottom: 12px; letter-spacing: -0.01em; }
   .exp-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
   .exp-wins { display: flex; flex-wrap: wrap; gap: 8px; }
-  .exp-win {
-    font-size: 12px; padding: 5px 12px;
-    border: 1px solid var(--rule); border-radius: 20px;
-    color: var(--ink); font-weight: 500;
-    background: var(--card);
-  }
-  .exp-win.highlight {
-    border-color: var(--accent); color: var(--accent);
-    background: var(--accent)08;
-  }
+  .exp-win { font-size: 12px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 20px; color: var(--ink); font-weight: 500; background: var(--card); }
+  .exp-win.highlight { border-color: var(--accent); color: var(--accent); background: #c8602a08; }
 
-  /* ── PORTFOLIO / DASHBOARD ── */
-  .portfolio-card {
-    background: var(--card);
-    border: 1px solid var(--rule);
-    border-radius: 16px;
-    overflow: hidden;
-    display: grid; grid-template-columns: 1fr 1fr;
-  }
-  .portfolio-preview {
-    background: #0f172a;
-    padding: 40px;
-    display: flex; align-items: center; justify-content: center;
-    min-height: 320px;
-    position: relative;
-    overflow: hidden;
-  }
-  .preview-mock {
-    width: 100%; max-width: 360px;
-    background: #1e2535;
-    border-radius: 10px;
-    padding: 20px;
-    border: 1px solid #2d3748;
-  }
-  .mock-bar-row { display: flex; gap: 6px; margin-bottom: 14px; }
-  .mock-bar { height: 8px; border-radius: 4px; background: #3b82f6; opacity: 0.8; }
-  .mock-line { height: 6px; border-radius: 3px; background: #334155; margin-bottom: 8px; }
-  .mock-line.short { width: 60%; }
-  .mock-line.med { width: 80%; }
-  .mock-chart { display: flex; align-items: flex-end; gap: 5px; height: 60px; margin-top: 16px; }
+  /* WORK */
+  .work-stack { display: flex; flex-direction: column; gap: 20px; }
+
+  /* Primary card - dashboard */
+  .portfolio-card { background: var(--card); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
+  .portfolio-preview { background: #0f172a; padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 280px; position: relative; overflow: hidden; }
+  .glow { position: absolute; width: 200px; height: 200px; border-radius: 50%; top: -40px; right: -40px; }
+  .glow-blue { background: radial-gradient(circle, #3b82f640, transparent 70%); }
+  .glow-orange { background: radial-gradient(circle, #c8602a40, transparent 70%); }
+  .glow-green { background: radial-gradient(circle, #1db95440, transparent 70%); }
+  .preview-mock { width: 100%; max-width: 300px; background: #1e2535; border-radius: 10px; padding: 16px; border: 1px solid #2d3748; }
+  .mock-chart { display: flex; align-items: flex-end; gap: 5px; height: 56px; margin-top: 14px; }
   .mock-col { flex: 1; border-radius: 3px 3px 0 0; }
-  .glow { position: absolute; width: 200px; height: 200px; border-radius: 50%;
-    background: radial-gradient(circle, #3b82f640, transparent 70%);
-    top: -40px; right: -40px; }
+  .portfolio-info { padding: 40px 36px; display: flex; flex-direction: column; justify-content: center; }
+  .portfolio-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .portfolio-title { font-family: 'DM Serif Display', serif; font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 12px; }
+  .portfolio-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .portfolio-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .chip { font-size: 11px; padding: 4px 12px; border: 1px solid var(--rule); border-radius: 20px; color: var(--muted); font-weight: 500; }
 
-  .portfolio-info { padding: 48px 40px; }
-  .portfolio-tag {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-  }
-  .portfolio-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px; line-height: 1.2;
-    letter-spacing: -0.01em; margin-bottom: 14px;
-  }
-  .portfolio-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
-  .portfolio-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
-  .chip {
-    font-size: 11px; padding: 4px 12px;
-    border: 1px solid var(--rule); border-radius: 20px;
-    color: var(--muted); font-weight: 500;
-  }
+  /* Secondary row - 3 column smaller cards */
+  .work-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .work-card { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+  .work-card-preview { padding: 28px 20px; display: flex; align-items: center; justify-content: center; min-height: 160px; position: relative; overflow: hidden; }
+  .work-card-preview.dark { background: #0f172a; }
+  .work-card-preview.spotify { background: #121212; }
+  .work-card-preview.light { background: #f1f5f9; }
+  .work-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .work-card-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .work-card-title { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 8px; }
+  .work-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1; }
+  .work-card-link { display: inline-block; margin-top: 16px; font-size: 12px; font-weight: 600; color: var(--accent); text-decoration: none; }
+  .work-card-link:hover { text-decoration: underline; }
 
-  /* ── CONTACT ── */
-  .contact-block {
-    background: var(--ink);
-    border-radius: 20px;
-    padding: 72px 64px;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 64px; align-items: center;
-  }
-  .contact-block h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(32px, 4vw, 52px);
-    color: var(--paper); line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
+  /* Storefront mini mock */
+  .store-mock { width: 100%; max-width: 220px; background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+  .store-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+  .store-logo { width: 28px; height: 28px; background: #0f172a; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 800; color: #fff; flex-shrink: 0; }
+  .store-name { font-size: 11px; font-weight: 700; color: #0f172a; }
+  .store-sub { font-size: 9px; color: #64748b; }
+  .store-cats { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+  .store-cat { font-size: 9px; padding: 2px 6px; border: 1px solid #e2e8f0; border-radius: 3px; color: #475569; }
+  .store-cat.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+  .store-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .store-item { background: #f8fafc; border-radius: 4px; padding: 7px; }
+  .store-item-img { width: 100%; height: 30px; background: #e2e8f0; border-radius: 3px; margin-bottom: 4px; }
+  .store-item-name { font-size: 8px; color: #0f172a; font-weight: 600; }
+  .store-item-price { font-size: 8px; color: #64748b; }
+
+  /* Spotify mini mock */
+  .sp-mock { width: 100%; max-width: 220px; background: #1a1a1a; border-radius: 8px; padding: 14px; }
+  .sp-label { font-size: 8px; color: #1db954; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .sp-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .sp-sub { font-size: 10px; color: #b3b3b3; margin-bottom: 10px; }
+  .sp-ep { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid #2a2a2a; }
+  .sp-ep:last-child { border-bottom: none; }
+  .sp-play { width: 20px; height: 20px; border-radius: 50%; background: #1db954; display: flex; align-items: center; justify-content: center; font-size: 8px; flex-shrink: 0; }
+  .sp-ep-title { font-size: 10px; color: #fff; font-weight: 500; line-height: 1.3; }
+  .sp-ep-meta { font-size: 9px; color: #535353; margin-top: 1px; }
+
+  /* Blog mini mock */
+  .blog-mock { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 220px; }
+  .blog-mini { background: #fff; border-radius: 6px; padding: 9px 11px; }
+  .blog-mini-tag { font-size: 8px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .blog-mini-title { font-size: 10px; font-weight: 600; color: #0f172a; line-height: 1.4; }
+
+  /* OTHER WORK - small link list */
+  .other-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 40px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .other-card { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px; text-decoration: none; color: inherit; transition: border-color 0.2s; display: block; }
+  .other-card:hover { border-color: var(--accent); }
+  .other-card-tag { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .other-card-title { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 6px; }
+  .other-card-meta { font-size: 11px; color: var(--accent); font-weight: 600; }
+
+  /* CONTACT */
+  .contact-block { background: var(--ink); border-radius: 20px; padding: 72px 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .contact-block h2 { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4vw, 52px); color: var(--paper); line-height: 1.1; letter-spacing: -0.02em; }
   .contact-block h2 em { color: var(--accent); font-style: italic; }
-  .contact-right { display: flex; flex-direction: column; gap: 20px; }
-  .contact-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 18px 20px; border-radius: 10px;
-    background: #ffffff0d; border: 1px solid #ffffff15;
-    text-decoration: none; transition: background 0.2s;
-  }
+  .contact-right { display: flex; flex-direction: column; gap: 14px; }
+  .contact-item { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 10px; background: #ffffff0d; border: 1px solid #ffffff15; text-decoration: none; transition: background 0.2s; }
   .contact-item:hover { background: #ffffff18; }
   .contact-icon { font-size: 18px; }
   .contact-label { font-size: 11px; color: #94a3b8; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
-  .contact-value { font-size: 15px; color: #fff; font-weight: 500; margin-top: 2px; }
+  .contact-value { font-size: 14px; color: #fff; font-weight: 500; margin-top: 2px; }
 
-  /* ── FOOTER ── */
-  footer {
-    text-align: center; padding: 32px 48px;
-    border-top: 1px solid var(--rule);
-    font-size: 12px; color: var(--muted);
-  }
+  footer { text-align: center; padding: 32px 48px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--muted); }
 
-  /* ── FULL-WIDTH WRAPPER ── */
-  .full-bleed { max-width: 100%; padding: 0 48px; }
-  .section-inner { max-width: 1200px; margin: 0 auto; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     nav { padding: 14px 20px; }
     .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 120px 20px 60px; gap: 48px; }
+    .hero { grid-template-columns: 1fr; padding: 120px 20px 60px; gap: 40px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
     section { padding: 64px 20px; }
     .about-grid { grid-template-columns: 1fr; gap: 40px; }
     .about-left { position: static; }
     .exp-item { grid-template-columns: 1fr; gap: 8px; }
     .portfolio-card { grid-template-columns: 1fr; }
-    .portfolio-preview { min-height: 200px; }
+    .work-row { grid-template-columns: 1fr; }
+    .other-grid { grid-template-columns: 1fr 1fr; }
     .contact-block { grid-template-columns: 1fr; padding: 40px 28px; gap: 36px; }
-    .hero-stats { grid-template-columns: 1fr 1fr; }
     footer { padding: 24px 20px; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">Adrian Cardinoza</a>
   <div class="nav-links">
@@ -352,12 +212,10 @@
 <!-- HERO -->
 <div style="max-width:1200px;margin:0 auto;">
 <div class="hero">
-  <div class="hero-left">
+  <div>
     <div class="hero-eyebrow">Marketing Operations Specialist</div>
     <h1>Turning <em>operations</em> into revenue.</h1>
-    <p class="hero-tagline">
-      6+ years scaling Amazon businesses from the inside — building the systems, teams, and content that grew a client network from $10K to $170K monthly revenue.
-    </p>
+    <p class="hero-tagline">6+ years scaling Amazon businesses from the inside, building the systems, teams, and content that grew a client network from $10K to $170K monthly revenue.</p>
     <div class="hero-cta">
       <a href="#work" class="btn btn-primary">See My Work</a>
       <a href="#contact" class="btn btn-outline">Get in Touch</a>
@@ -365,12 +223,12 @@
   </div>
   <div class="hero-stats">
     <div class="stat-box">
-      <div class="stat-number">17×</div>
+      <div class="stat-number">17x</div>
       <div class="stat-label">Revenue growth scaled across client accounts</div>
     </div>
     <div class="stat-box">
       <div class="stat-number">6+</div>
-      <div class="stat-label">Years in Amazon e-commerce & operations</div>
+      <div class="stat-label">Years in Amazon e-commerce and operations</div>
     </div>
     <div class="stat-box">
       <div class="stat-number">$1.7M</div>
@@ -378,14 +236,14 @@
     </div>
     <div class="stat-box">
       <div class="stat-number">0</div>
-      <div class="stat-label">Loss months in 2025 — full-year profitability</div>
+      <div class="stat-label">Loss months in 2025, full-year profitability</div>
     </div>
   </div>
 </div>
 </div>
 
 <!-- ABOUT -->
-<div style="background: var(--card); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+<div style="background:var(--card);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
 <section id="about">
   <div class="section-rule"><span>About</span></div>
   <div class="about-grid">
@@ -393,19 +251,34 @@
       <div class="about-label">Core Expertise</div>
       <div class="skills-list">
         <div class="skill-item"><span class="skill-name">Amazon Seller Central</span><span class="skill-tag core">Core</span></div>
-        <div class="skill-item"><span class="skill-name">SOP Design & Process Ops</span><span class="skill-tag core">Core</span></div>
-        <div class="skill-item"><span class="skill-name">Revenue & Capacity Planning</span><span class="skill-tag core">Core</span></div>
-        <div class="skill-item"><span class="skill-name">Cross-Functional Team Lead</span><span class="skill-tag core">Core</span></div>
-        <div class="skill-item"><span class="skill-name">A+ Content & Storefronts</span><span class="skill-tag">Amazon</span></div>
+        <div class="skill-item"><span class="skill-name">SOP Design and Process Ops</span><span class="skill-tag core">Core</span></div>
+        <div class="skill-item"><span class="skill-name">Revenue and Capacity Planning</span><span class="skill-tag core">Core</span></div>
+        <div class="skill-item"><span class="skill-name">Cross-Functional Team Leadership</span><span class="skill-tag core">Core</span></div>
+        <div class="skill-item"><span class="skill-name">A+ Content and Storefronts</span><span class="skill-tag">Amazon</span></div>
         <div class="skill-item"><span class="skill-name">SEO Content (SurferSEO)</span><span class="skill-tag">Marketing</span></div>
         <div class="skill-item"><span class="skill-name">Video Editing (Premiere Pro)</span><span class="skill-tag">Creative</span></div>
         <div class="skill-item"><span class="skill-name">WordPress / CMS</span><span class="skill-tag">Tech</span></div>
       </div>
+
+      <a href="https://drive.google.com/file/d/1h6-5dAFBGZLWLLRuYcHBmR1h0-nw3hHc/view" target="_blank" class="cert-badge">
+        <svg class="cert-logo" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+          <path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+          <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+          <path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.96 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        <div class="cert-info">
+          <div class="cert-title">Fundamentals of Digital Marketing</div>
+          <div class="cert-sub">Google Digital Garage - Certified</div>
+        </div>
+        <div class="cert-arrow">↗</div>
+      </a>
     </div>
+
     <div class="about-right">
-      <p>I'm a <strong>Marketing & Operations specialist</strong> who sits at the intersection of strategy and execution. Over the past 6+ years, I've built the kind of backend systems that let Amazon businesses scale without falling apart.</p>
-      <p>At Seller Interactive, I took on end-to-end ownership of a client services operation — overseeing everything from content production and fulfillment coordination to quality assurance and account risk management. The result: <strong>monthly revenue scaled from $10K to $170K</strong> through process redesign, SOP implementation, and capacity planning.</p>
-      <p>I understand both sides of the marketing equation: the <strong>creative work</strong> (A+ content, storefronts, SEO copy, social media) and the <strong>operational machinery</strong> that makes it repeatable and scalable. I'm now looking to bring that dual fluency to a Marketing Operations role where systems and storytelling meet.</p>
+      <p>I'm a <strong>Marketing and Operations specialist</strong> who sits at the intersection of strategy and execution. Over the past 6+ years, I've built the kind of backend systems that let Amazon businesses scale without falling apart.</p>
+      <p>At Seller Interactive, I took on end-to-end ownership of a client services operation, overseeing everything from content production and fulfillment coordination to quality assurance and account risk management. The result: <strong>monthly revenue scaled from $10K to $170K</strong> through process redesign, SOP implementation, and capacity planning.</p>
+      <p>I understand both sides of the marketing equation: the <strong>creative work</strong> (A+ content, storefronts, SEO copy, social media, podcast production) and the <strong>operational machinery</strong> that makes it repeatable and scalable. I'm now looking to bring that dual fluency to a Marketing Operations role where systems and storytelling meet.</p>
     </div>
   </div>
 </section>
@@ -414,22 +287,23 @@
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-rule"><span>Experience</span></div>
-  <h2 class="section-title">Where I've worked<br>& what I built.</h2>
+  <h2 class="section-title">Where I've worked on<br>and what I built.</h2>
 
   <div class="exp-list">
 
     <div class="exp-item">
-      <div class="exp-meta">
-        <div class="exp-date">May – Oct 2025</div>
+      <div>
+        <div class="exp-date">May 2025 to Oct 2025</div>
         <div class="exp-company">Inversal Distribution Inc.</div>
         <div class="exp-badge">Most Recent</div>
       </div>
-      <div class="exp-content">
+      <div>
         <div class="exp-role">Marketing Specialist</div>
-        <div class="exp-desc">Managed brand-owned marketing initiatives for Lakai Philippines across social media, events, and Amazon marketplace expansion. Designed and branded the Amazon storefront, optimized listings via flat files, and used Datadive and Seller Central for market analysis and campaign performance tracking.</div>
+        <div class="exp-desc">Managed brand-owned marketing for Lakai Philippines across social media, events, and Amazon marketplace expansion. Designed and built the Amazon storefront from scratch, organized product categories, optimized listings with keyword-rich copy, and updated product photos via flat files using Seller Central.</div>
         <div class="exp-wins">
           <span class="exp-win highlight">Amazon Storefront Design</span>
-          <span class="exp-win highlight">Listing Optimization</span>
+          <span class="exp-win highlight">Listing Optimization via Flat Files</span>
+          <span class="exp-win highlight">Keyword Research and SEO Copy</span>
           <span class="exp-win">Datadive Analytics</span>
           <span class="exp-win">Social Media Management</span>
         </div>
@@ -437,29 +311,29 @@
     </div>
 
     <div class="exp-item">
-      <div class="exp-meta">
-        <div class="exp-date">Jul 2022 – Apr 2025</div>
+      <div>
+        <div class="exp-date">Jul 2022 to Apr 2025</div>
         <div class="exp-company">Seller Interactive</div>
       </div>
-      <div class="exp-content">
+      <div>
         <div class="exp-role">Operations Lead</div>
         <div class="exp-desc">Led end-to-end operations for a client services business serving Amazon sellers. Scaled monthly revenue from $10K to $170K through process optimization, workflow redesign, and capacity planning. Directed a cross-functional team covering order processing, fulfillment, content production, and QA.</div>
         <div class="exp-wins">
-          <span class="exp-win highlight">$10K → $170K MRR</span>
-          <span class="exp-win highlight">SOP Design & Implementation</span>
+          <span class="exp-win highlight">$10K to $170K MRR</span>
+          <span class="exp-win highlight">SOP Design and Implementation</span>
           <span class="exp-win">Cross-Functional Team Leadership</span>
-          <span class="exp-win">Risk & Compliance Management</span>
+          <span class="exp-win">Risk and Compliance Management</span>
           <span class="exp-win">Capacity Planning</span>
         </div>
       </div>
     </div>
 
     <div class="exp-item">
-      <div class="exp-meta">
-        <div class="exp-date">Jan 2021 – Jul 2022</div>
+      <div>
+        <div class="exp-date">Jan 2021 to Jul 2022</div>
         <div class="exp-company">Seller Interactive</div>
       </div>
-      <div class="exp-content">
+      <div>
         <div class="exp-role">Amazon Marketing Officer</div>
         <div class="exp-desc">Created high-converting Amazon A+ content and rich media across multiple client accounts, improving product visibility and supporting revenue growth. Engaged in cold outreach and content strategy to support client acquisition.</div>
         <div class="exp-wins">
@@ -471,11 +345,11 @@
     </div>
 
     <div class="exp-item">
-      <div class="exp-meta">
-        <div class="exp-date">Jan 2020 – Jan 2021</div>
+      <div>
+        <div class="exp-date">Jan 2020 to Jan 2021</div>
         <div class="exp-company">Rocket Marketing</div>
       </div>
-      <div class="exp-content">
+      <div>
         <div class="exp-role">Content Writer</div>
         <div class="exp-desc">Produced SEO-optimized content for Amazon clients using SurferSEO and WordPress CMS, with a focus on improving store page visibility and brand presence.</div>
         <div class="exp-wins">
@@ -487,17 +361,34 @@
     </div>
 
     <div class="exp-item">
-      <div class="exp-meta">
-        <div class="exp-date">Jul 2018 – Jan 2020</div>
+      <div>
+        <div class="exp-date">Jul 2018 to Jan 2020</div>
         <div class="exp-company">MG Consultancy</div>
       </div>
-      <div class="exp-content">
-        <div class="exp-role">Marketing & Communications Associate</div>
-        <div class="exp-desc">Managed social media profiles across Facebook, YouTube, LinkedIn, and Instagram. Developed promotional content including Spotify podcasts and video content, and maintained strategic monthly social media calendars.</div>
+      <div>
+        <div class="exp-role">Marketing and Communications Associate</div>
+        <div class="exp-desc">Managed social media profiles across Facebook, YouTube, LinkedIn, and Instagram. Produced and published Spotify podcast episodes from recording through editing and release. Maintained strategic monthly content calendars.</div>
         <div class="exp-wins">
           <span class="exp-win">Multi-Platform Social Media</span>
+          <span class="exp-win">Podcast Production</span>
           <span class="exp-win">Content Calendars</span>
-          <span class="exp-win">Video & Podcast Production</span>
+          <span class="exp-win">Video Production</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-date">Concurrent</div>
+        <div class="exp-company">Orthopaedic International Inc.</div>
+      </div>
+      <div>
+        <div class="exp-role">Marketing Specialist (Part-time)</div>
+        <div class="exp-desc">Maintained social media presence across Facebook, YouTube, and Instagram. Developed content to expand platform reach and crafted creative materials for company events.</div>
+        <div class="exp-wins">
+          <span class="exp-win">Social Media Content</span>
+          <span class="exp-win">Event Materials</span>
+          <span class="exp-win">Creative Design</span>
         </div>
       </div>
     </div>
@@ -505,59 +396,196 @@
   </div>
 </section>
 
-<!-- WORK / DASHBOARD -->
-<div style="background: var(--card); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+<!-- WORK -->
+<div style="background:var(--card);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
 <section id="work">
   <div class="section-rule"><span>Featured Work</span></div>
   <h2 class="section-title">Data I've managed,<br>visualized.</h2>
-  <p class="section-sub">A live interactive dashboard built from real operational data — showing revenue, profitability, and growth trends across a two-year period.</p>
+  <p class="section-sub">A selection of real work across operations, e-commerce, content, and marketing, each showing a different side of what I bring to a team.</p>
 
-  <div class="portfolio-card">
-    <div class="portfolio-preview">
-      <div class="glow"></div>
-      <div class="preview-mock">
-        <div style="font-size:11px;color:#94a3b8;margin-bottom:12px;font-family:monospace;">AMAZON REVIEW NETWORK · 2024–2025</div>
-        <div style="display:flex;gap:8px;margin-bottom:16px;">
-          <div style="background:#3b82f620;border:1px solid #3b82f640;border-radius:4px;padding:6px 10px;flex:1;">
-            <div style="font-size:10px;color:#64748b;">Revenue</div>
-            <div style="font-size:16px;font-weight:700;color:#fff;">$1.72M</div>
+  <div class="work-stack">
+
+    <!-- Dashboard - primary feature -->
+    <div class="portfolio-card">
+      <div class="portfolio-preview">
+        <div class="glow glow-blue"></div>
+        <div class="preview-mock">
+          <div style="font-size:10px;color:#94a3b8;margin-bottom:10px;font-family:monospace;">AMAZON REVIEW NETWORK 2024-2025</div>
+          <div style="display:flex;gap:6px;margin-bottom:12px;">
+            <div style="background:#3b82f620;border:1px solid #3b82f640;border-radius:4px;padding:6px 8px;flex:1;">
+              <div style="font-size:9px;color:#64748b;">Revenue</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;">$1.72M</div>
+            </div>
+            <div style="background:#22c55e20;border:1px solid #22c55e40;border-radius:4px;padding:6px 8px;flex:1;">
+              <div style="font-size:9px;color:#64748b;">Profit</div>
+              <div style="font-size:15px;font-weight:700;color:#22c55e;">$651K</div>
+            </div>
           </div>
-          <div style="background:#22c55e20;border:1px solid #22c55e40;border-radius:4px;padding:6px 10px;flex:1;">
-            <div style="font-size:10px;color:#64748b;">Profit</div>
-            <div style="font-size:16px;font-weight:700;color:#22c55e;">$651K</div>
+          <div class="mock-chart">
+            <div class="mock-col" style="height:30%;background:#3b82f660;"></div>
+            <div class="mock-col" style="height:28%;background:#3b82f660;"></div>
+            <div class="mock-col" style="height:22%;background:#3b82f660;"></div>
+            <div class="mock-col" style="height:27%;background:#3b82f660;"></div>
+            <div class="mock-col" style="height:34%;background:#3b82f6;"></div>
+            <div class="mock-col" style="height:26%;background:#3b82f660;"></div>
+            <div class="mock-col" style="height:36%;background:#3b82f6;"></div>
+            <div class="mock-col" style="height:32%;background:#3b82f6;"></div>
+            <div class="mock-col" style="height:31%;background:#3b82f6;"></div>
+            <div class="mock-col" style="height:30%;background:#3b82f660;"></div>
+            <div class="mock-col" style="height:29%;background:#3b82f660;"></div>
+            <div class="mock-col" style="height:25%;background:#3b82f660;"></div>
           </div>
+          <div style="font-size:9px;color:#475569;margin-top:8px;text-align:center;">Jan to Dec 2025 Monthly Revenue</div>
         </div>
-        <div class="mock-chart">
-          <div class="mock-col" style="height:30%;background:#3b82f660;"></div>
-          <div class="mock-col" style="height:28%;background:#3b82f660;"></div>
-          <div class="mock-col" style="height:22%;background:#3b82f660;"></div>
-          <div class="mock-col" style="height:27%;background:#3b82f660;"></div>
-          <div class="mock-col" style="height:34%;background:#3b82f6;"></div>
-          <div class="mock-col" style="height:26%;background:#3b82f660;"></div>
-          <div class="mock-col" style="height:36%;background:#3b82f6;"></div>
-          <div class="mock-col" style="height:32%;background:#3b82f6;"></div>
-          <div class="mock-col" style="height:31%;background:#3b82f6;"></div>
-          <div class="mock-col" style="height:30%;background:#3b82f660;"></div>
-          <div class="mock-col" style="height:29%;background:#3b82f660;"></div>
-          <div class="mock-col" style="height:25%;background:#3b82f660;"></div>
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-tag">Live Interactive Dashboard</div>
+        <div class="portfolio-title">Amazon Review Network - Financial Performance Dashboard</div>
+        <div class="portfolio-desc">A full financial operations dashboard covering 2 years of revenue, profitability, cost breakdown, and month-over-month trends. Built from real operational data I managed as Operations Lead, showing both the analytical thinking and the business outcomes behind the numbers.</div>
+        <div class="portfolio-chips">
+          <span class="chip">Revenue Analysis</span>
+          <span class="chip">Profit Margin Tracking</span>
+          <span class="chip">YoY Comparison</span>
+          <span class="chip">Cost Breakdown</span>
+          <span class="chip">Chart.js</span>
         </div>
-        <div style="font-size:10px;color:#475569;margin-top:10px;text-align:center;">Jan → Dec 2025 Monthly Revenue</div>
+        <a href="amazon_review_network_dashboard.html" class="btn btn-primary" target="_blank">Open Live Dashboard</a>
       </div>
     </div>
-    <div class="portfolio-info">
-      <div class="portfolio-tag">Live Interactive Dashboard</div>
-      <div class="portfolio-title">Amazon Review Network — Financial Performance Dashboard</div>
-      <div class="portfolio-desc">A full financial operations dashboard covering 2 years of revenue, profitability, cost breakdown, and month-over-month trends. Built from real operational data I managed as Operations Lead — demonstrating both the analytical thinking and the business outcomes behind the numbers.</div>
-      <div class="portfolio-chips">
-        <span class="chip">Revenue Analysis</span>
-        <span class="chip">Profit Margin Tracking</span>
-        <span class="chip">YoY Comparison</span>
-        <span class="chip">Cost Breakdown</span>
-        <span class="chip">Chart.js</span>
-        <span class="chip">HTML / CSS / JS</span>
+
+    <!-- Secondary row: 3 cards -->
+    <div class="work-row">
+
+      <!-- Lakai Amazon Storefront -->
+      <div class="work-card">
+        <div class="work-card-preview light">
+          <div class="glow glow-orange" style="top:-30px;right:-30px;width:150px;height:150px;"></div>
+          <div class="store-mock">
+            <div class="store-header">
+              <div class="store-logo">LAKAI</div>
+              <div>
+                <div class="store-name">Lakai Philippines</div>
+                <div class="store-sub">amazon.com/stores</div>
+              </div>
+            </div>
+            <div class="store-cats">
+              <span class="store-cat active">All</span>
+              <span class="store-cat">Shoes</span>
+              <span class="store-cat">Apparel</span>
+              <span class="store-cat">Skate</span>
+            </div>
+            <div class="store-grid">
+              <div class="store-item">
+                <div class="store-item-img"></div>
+                <div class="store-item-name">Carroll Select</div>
+                <div class="store-item-price">$75.00</div>
+              </div>
+              <div class="store-item">
+                <div class="store-item-img"></div>
+                <div class="store-item-name">Manchester</div>
+                <div class="store-item-price">$65.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-body">
+          <div class="work-card-tag">Amazon Storefront</div>
+          <div class="work-card-title">Lakai Philippines - Amazon Store Design</div>
+          <div class="work-card-desc">Designed and built the full Amazon storefront for Lakai Philippines from scratch. Organized product categories, updated listings with SEO-optimized descriptions and keywords, and refreshed product photography via flat files.</div>
+          <a href="https://www.amazon.com/stores/page/3106793A-EDCB-4524-A293-CC055D84DA17" target="_blank" class="work-card-link">View Live Storefront ↗</a>
+        </div>
       </div>
-      <a href="amazon_review_network_dashboard.html" class="btn btn-primary" target="_blank">Open Live Dashboard →</a>
+
+      <!-- Spotify Podcast -->
+      <div class="work-card">
+        <div class="work-card-preview spotify">
+          <div class="glow glow-green" style="top:-30px;right:-30px;width:150px;height:150px;"></div>
+          <div class="sp-mock">
+            <div class="sp-label">Podcast</div>
+            <div class="sp-title">MG Consultancy</div>
+            <div class="sp-sub">Produced and published on Spotify</div>
+            <div class="sp-ep">
+              <div class="sp-play">&#9654;</div>
+              <div>
+                <div class="sp-ep-title">Episode 1</div>
+                <div class="sp-ep-meta">Recorded, Edited, Published</div>
+              </div>
+            </div>
+            <div class="sp-ep">
+              <div class="sp-play">&#9654;</div>
+              <div>
+                <div class="sp-ep-title">Episode 2</div>
+                <div class="sp-ep-meta">Full production pipeline</div>
+              </div>
+            </div>
+            <div class="sp-ep">
+              <div class="sp-play">&#9654;</div>
+              <div>
+                <div class="sp-ep-title">Episode 3</div>
+                <div class="sp-ep-meta">End-to-end by Adrian</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-body">
+          <div class="work-card-tag">Podcast Production</div>
+          <div class="work-card-title">Spotify Podcast Series - MG Consultancy</div>
+          <div class="work-card-desc">Handled the full production pipeline for the company's Spotify podcast, from recording and audio editing through to final publishing. Managed episode cadence and platform presence end-to-end.</div>
+          <a href="https://open.spotify.com/show/6FYmw4uj9dF0LXPIZqdbj9" target="_blank" class="work-card-link">Listen on Spotify ↗</a>
+        </div>
+      </div>
+
+      <!-- Golden Haven Blogs -->
+      <div class="work-card">
+        <div class="work-card-preview light">
+          <div class="glow glow-orange" style="top:-30px;right:-30px;width:150px;height:150px;"></div>
+          <div class="blog-mock">
+            <div class="blog-mini">
+              <div class="blog-mini-tag">SEO Blog</div>
+              <div class="blog-mini-title">Saving for Retirement</div>
+            </div>
+            <div class="blog-mini">
+              <div class="blog-mini-tag">SEO Blog</div>
+              <div class="blog-mini-title">How to Care for Yourself Emotionally During the Pandemic</div>
+            </div>
+            <div class="blog-mini">
+              <div class="blog-mini-tag">SEO Blog</div>
+              <div class="blog-mini-title">6 Key Benefits of Working From Home</div>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-body">
+          <div class="work-card-tag">SEO Content Writing</div>
+          <div class="work-card-title">Golden Haven - Blog Articles</div>
+          <div class="work-card-desc">A sample of SEO-optimized blog articles written for Golden Haven Memorial Parks, covering personal finance, wellness, and lifestyle topics with keyword strategy built in.</div>
+          <a href="https://www.goldenhaven.com.ph/blog/saving-for-retirement/" target="_blank" class="work-card-link">Read Sample Article ↗</a>
+        </div>
+      </div>
+
     </div>
+
+    <!-- Other articles discreet links -->
+    <div>
+      <div class="other-label">More Written Work - Golden Haven Blog</div>
+      <div class="other-grid">
+        <a href="https://www.goldenhaven.com.ph/blog/saving-for-retirement/" target="_blank" class="other-card">
+          <div class="other-card-tag">Finance</div>
+          <div class="other-card-title">Saving for Retirement</div>
+          <div class="other-card-meta">goldenhaven.com.ph ↗</div>
+        </a>
+        <a href="https://www.goldenhaven.com.ph/blog/how-to-care-for-yourself-emotionally-in-the-middle-of-the-pandemic/" target="_blank" class="other-card">
+          <div class="other-card-tag">Wellness</div>
+          <div class="other-card-title">How to Care for Yourself Emotionally in the Middle of the Pandemic</div>
+          <div class="other-card-meta">goldenhaven.com.ph ↗</div>
+        </a>
+        <a href="https://www.goldenhaven.com.ph/blog/6-key-benefits-of-working-from-home/" target="_blank" class="other-card">
+          <div class="other-card-tag">Lifestyle</div>
+          <div class="other-card-title">6 Key Benefits of Working From Home</div>
+          <div class="other-card-meta">goldenhaven.com.ph ↗</div>
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
 </div>
@@ -567,7 +595,7 @@
   <div class="contact-block">
     <div>
       <h2>Let's work on something <em>great</em> together.</h2>
-      <p style="color:#94a3b8;margin-top:20px;font-size:15px;line-height:1.7;">Open to Marketing Operations, E-commerce, and Amazon Specialist roles — onsite or hybrid in the Philippines.</p>
+      <p style="color:#94a3b8;margin-top:20px;font-size:15px;line-height:1.7;">Open to Marketing Operations, E-commerce, and Amazon Specialist roles. Onsite or hybrid in the Philippines.</p>
     </div>
     <div class="contact-right">
       <a href="mailto:adriancardinoza1@gmail.com" class="contact-item">
@@ -591,7 +619,7 @@
           <div class="contact-value">tinyurl.com/3uwdxs7d</div>
         </div>
       </a>
-      <a href="#" class="contact-item" onclick="alert('Upload your resume PDF and rename it to resume.pdf in the same folder as this file.')">
+      <a href="resume.pdf" download class="contact-item">
         <span class="contact-icon">📄</span>
         <div>
           <div class="contact-label">Resume</div>
@@ -603,7 +631,7 @@
 </section>
 
 <footer>
-  © 2025 Adrian Cardinoza · San Isidro, Cabuyao, Laguna · Built with care, not a template.
+  &copy; 2025 Adrian Cardinoza &nbsp;·&nbsp; San Isidro, Cabuyao, Laguna &nbsp;·&nbsp; Built with care, not a template.
 </footer>
 
 </body>
