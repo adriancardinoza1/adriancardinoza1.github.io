@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study - Operations Turnaround | Adrian Cardinoza</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f2ec;
+    --accent: #c8602a;
+    --muted: #6b6560;
+    --rule: #d9d4cc;
+    --card: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 14px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 18px; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+  .nav-back { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+  .nav-back:hover { color: var(--accent); }
+
+  /* HERO */
+  .case-hero { padding: 140px 48px 80px; max-width: 900px; margin: 0 auto; }
+  .case-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .case-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+  .case-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(36px, 5vw, 64px); line-height: 1.05; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 24px; }
+  .case-hero h1 em { font-style: italic; color: var(--accent); }
+  .case-meta { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--rule); }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .meta-value { font-size: 14px; font-weight: 600; color: var(--ink); }
+
+  /* STAT STRIP */
+  .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-bottom: 72px; border-radius: 14px; overflow: hidden; }
+  .strip-stat { background: var(--ink); padding: 28px 24px; }
+  .strip-stat:nth-child(2) { background: #1a1a1a; }
+  .strip-stat:nth-child(3) { background: #222; }
+  .strip-stat:nth-child(4) { background: #1a1a1a; }
+  .strip-number { font-family: 'DM Serif Display', serif; font-size: 36px; color: #fff; line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .strip-number span { color: var(--accent); }
+  .strip-label { font-size: 11px; color: #94a3b8; font-weight: 500; line-height: 1.4; }
+
+  /* BODY */
+  .case-body { max-width: 900px; margin: 0 auto; padding: 0 48px 96px; }
+
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+
+  .case-section { margin-bottom: 64px; }
+  .case-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
+  .case-section p { font-size: 17px; color: #3d3a36; line-height: 1.85; font-weight: 300; margin-bottom: 20px; }
+  .case-section p strong { font-weight: 600; color: var(--ink); }
+  .case-section p:last-child { margin-bottom: 0; }
+
+  /* CALLOUT BOX */
+  .callout { background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 24px 28px; margin: 32px 0; }
+  .callout p { font-size: 16px; color: var(--ink); font-weight: 400; line-height: 1.7; margin: 0; }
+  .callout p em { font-style: italic; color: var(--accent); font-weight: 500; }
+
+  /* TIMELINE */
+  .timeline { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
+  .timeline-item { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--rule); position: relative; }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-phase { font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; padding-top: 3px; }
+  .timeline-content h4 { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .timeline-content p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  /* RESULTS GRID */
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 32px 0; }
+  .result-card { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 24px; }
+  .result-number { font-family: 'DM Serif Display', serif; font-size: 40px; color: var(--ink); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .result-number.green { color: #16a34a; }
+  .result-number.accent { color: var(--accent); }
+  .result-label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* LEARNINGS */
+  .learning-list { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+  .learning-item { display: flex; gap: 16px; align-items: flex-start; }
+  .learning-num { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--rule); line-height: 1; flex-shrink: 0; width: 36px; }
+  .learning-text h4 { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .learning-text p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  /* CTA */
+  .case-cta { background: var(--ink); border-radius: 16px; padding: 48px; display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; margin-top: 72px; }
+  .case-cta h3 { font-family: 'DM Serif Display', serif; font-size: 28px; color: #fff; line-height: 1.2; }
+  .case-cta h3 em { color: var(--accent); font-style: italic; }
+  .btn { padding: 13px 28px; border-radius: 4px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; display: inline-block; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #a84d20; }
+  .btn-outline-white { background: transparent; color: #fff; border: 1.5px solid #ffffff40; }
+  .btn-outline-white:hover { border-color: #fff; }
+  .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  footer { text-align: center; padding: 32px 48px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .case-hero { padding: 120px 20px 60px; }
+    .case-body { padding: 0 20px 64px; }
+    .stat-strip { grid-template-columns: 1fr 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+    .results-grid { grid-template-columns: 1fr; }
+    .case-cta { flex-direction: column; padding: 32px 24px; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Adrian Cardinoza</a>
+  <a class="nav-back" href="index.html">← Back to Portfolio</a>
+</nav>
+
+<!-- HERO -->
+<div class="case-hero">
+  <div class="case-eyebrow">Case Study</div>
+  <h1>Rescuing a failing project and scaling it <em>17x.</em></h1>
+  <div class="case-meta">
+    <div class="meta-item"><div class="meta-label">Company</div><div class="meta-value">Seller Interactive</div></div>
+    <div class="meta-item"><div class="meta-label">Role</div><div class="meta-value">Operations Lead</div></div>
+    <div class="meta-item"><div class="meta-label">Duration</div><div class="meta-value">Jul 2022 to Apr 2025</div></div>
+    <div class="meta-item"><div class="meta-label">Industry</div><div class="meta-value">Amazon E-commerce Services</div></div>
+  </div>
+</div>
+
+<!-- STAT STRIP -->
+<div style="max-width:900px;margin:0 auto;padding:0 48px;">
+  <div class="stat-strip">
+    <div class="strip-stat">
+      <div class="strip-number">$10K<span> to</span></div>
+      <div class="strip-label">Starting monthly revenue when I took over</div>
+    </div>
+    <div class="strip-stat">
+      <div class="strip-number" style="color:#22c55e;">$170K</div>
+      <div class="strip-label">Monthly revenue at peak after optimization</div>
+    </div>
+    <div class="strip-stat">
+      <div class="strip-number"><span>17</span>x</div>
+      <div class="strip-label">Total revenue growth across the project</div>
+    </div>
+    <div class="strip-stat">
+      <div class="strip-number" style="color:#22c55e;">0</div>
+      <div class="strip-label">Loss months once systems were in place</div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="case-body">
+
+  <!-- THE SITUATION -->
+  <div class="case-section">
+    <div class="section-label">The Situation</div>
+    <h2>A project on the verge of being shut down.</h2>
+    <p>When I stepped into the Operations Lead role at Seller Interactive, I inherited a project that was in serious trouble. The business was running an Amazon reviewer network, connecting sellers with verified reviewers to generate authentic product reviews and boost rankings. The concept worked. The execution did not.</p>
+    <p>Clients had paid for a service and were seeing <strong>no results</strong>. Complaints were piling up. Error rates were high. There were no documented processes to speak of — everything lived in people's heads, which meant every new task started from scratch and every team member handled things differently. The project was generating revenue on paper but burning client trust fast.</p>
+
+    <div class="callout">
+      <p><em>"The project was almost buried."</em> Clients were paying and getting nothing back. Without a clear intervention, the business would have lost its entire client base within months.</p>
+    </div>
+
+    <p>The core problems were clear once I mapped them out. There was no repeatable system for onboarding clients, managing reviewer assignments, tracking deliverables, or following up on results. Quality was inconsistent because accountability was inconsistent. And the team was too thinly stretched to keep up with even the existing volume, let alone grow it.</p>
+  </div>
+
+  <!-- THE APPROACH -->
+  <div class="case-section">
+    <div class="section-label">The Approach</div>
+    <h2>Build the foundation before scaling anything.</h2>
+    <p>The instinct in a crisis is to move fast and fix the most visible problems first. I took a different approach: slow down, document everything, then rebuild from the ground up. Scaling a broken system faster just breaks it faster.</p>
+    <p>I started by mapping every step of the existing workflow, identifying where handoffs were failing and where accountability was unclear. From there, I built the first real SOPs the project had ever had, covering client onboarding, reviewer matching, order tracking, content delivery, and quality checks.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 1</div>
+        <div class="timeline-content">
+          <h4>Audit and document the existing chaos</h4>
+          <p>Mapped every workflow step from client onboarding to delivery. Identified the exact failure points causing client complaints and high error rates.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 2</div>
+        <div class="timeline-content">
+          <h4>Build SOPs from scratch</h4>
+          <p>Created standardized operating procedures for every repeatable task. Nothing was left to memory or interpretation. Each SOP was tested by the team before it became the standard.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 3</div>
+        <div class="timeline-content">
+          <h4>A/B test and document what works</h4>
+          <p>Ran structured tests on reviewer matching methods, client communication cadences, and delivery timelines. Documented results rigorously and kept only what moved the metrics in the right direction.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 4</div>
+        <div class="timeline-content">
+          <h4>Hire slowly, scale deliberately</h4>
+          <p>Added team members in line with actual capacity needs, not projections. Each new hire was onboarded against the existing SOPs, keeping quality consistent as the team grew.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Phase 5</div>
+        <div class="timeline-content">
+          <h4>Continuous optimization</h4>
+          <p>Treated the SOPs as living documents. As the business scaled, workflows were updated, bottlenecks were identified early, and the team was structured to handle increasing volume without sacrificing quality.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>The A/B testing piece was particularly important. Rather than guessing what would improve results for clients, I tested it methodically and documented the outcomes. This gave the team a growing playbook of proven tactics, and gave clients consistent, explainable results.</p>
+  </div>
+
+  <!-- THE RESULTS -->
+  <div class="case-section">
+    <div class="section-label">The Results</div>
+    <h2>From complaints to consistency to growth.</h2>
+    <p>The turnaround did not happen overnight. The first few months were about stopping the bleeding, rebuilding client confidence, and creating a stable operational base. Once that foundation was in place, growth became a byproduct of the systems rather than something we had to chase.</p>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-number accent">17x</div>
+        <div class="result-label">Revenue growth from $10K to $170K monthly over the course of the engagement</div>
+      </div>
+      <div class="result-card">
+        <div class="result-number green">Zero</div>
+        <div class="result-label">Loss months recorded once the new systems and team structure were fully operational</div>
+      </div>
+      <div class="result-card">
+        <div class="result-number" style="color:#2563eb;">SOPs</div>
+        <div class="result-label">Complete library of standardized operating procedures built from nothing, covering every client-facing and internal workflow</div>
+      </div>
+      <div class="result-card">
+        <div class="result-number" style="color:#7c3aed;">$1.7M</div>
+        <div class="result-label">Total annual revenue managed by 2025 with consistent profitability across all 12 months</div>
+      </div>
+    </div>
+
+    <p>Beyond the numbers, the project went from being a liability to being one of the most stable revenue streams in the business. Client complaints dropped significantly as delivery became predictable. The team went from reactive firefighting to proactive execution, because they had clear systems to follow.</p>
+
+    <div class="callout">
+      <p>The biggest shift was not the revenue number. It was the moment the team could handle a busy month <em>without me personally managing every step</em>. That is what a well-built system looks like.</p>
+    </div>
+  </div>
+
+  <!-- WHAT I LEARNED -->
+  <div class="case-section">
+    <div class="section-label">What I Learned</div>
+    <h2>The real lessons from scaling an operation.</h2>
+
+    <div class="learning-list">
+      <div class="learning-item">
+        <div class="learning-num">01</div>
+        <div class="learning-text">
+          <h4>Documentation is not overhead, it is the product.</h4>
+          <p>In a service business, your SOPs are what you are actually selling. Consistent delivery is the product. The reviews were just the output.</p>
+        </div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-num">02</div>
+        <div class="learning-text">
+          <h4>Test before you scale.</h4>
+          <p>Every method we scaled had been tested first. A/B testing gave us evidence to act on, not just instinct. This saved time and protected client results.</p>
+        </div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-num">03</div>
+        <div class="learning-text">
+          <h4>Hire for the system, not the gap.</h4>
+          <p>Adding people too fast without clear roles just multiplies the chaos. Hiring slowly and against documented SOPs meant every new team member was productive from day one.</p>
+        </div>
+      </div>
+      <div class="learning-item">
+        <div class="learning-num">04</div>
+        <div class="learning-text">
+          <h4>Revenue follows reliability.</h4>
+          <p>We did not grow by chasing more clients. We grew by making the existing clients successful consistently. Referrals and retention did the rest.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="case-cta">
+    <h3>Want to bring this kind of thinking to <em>your team?</em></h3>
+    <div class="cta-btns">
+      <a href="mailto:adriancardinoza1@gmail.com" class="btn btn-primary">Get in Touch</a>
+      <a href="index.html" class="btn btn-outline-white">Back to Portfolio</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2025 Adrian Cardinoza &nbsp;·&nbsp; San Isidro, Cabuyao, Laguna
+</footer>
+
+</body>
+</html>
