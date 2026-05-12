@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Amazon Review Network — Performance Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: #1e293b; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+  .header { margin-bottom: 28px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+  .title-block h1 { font-size: 24px; font-weight: 800; color: #0f172a; }
+  .title-block p { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .role-badge { background: #0f172a; color: #fff; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 20px; white-space: nowrap; align-self: center; }
+  .tab-row { display: flex; gap: 8px; margin-bottom: 24px; }
+  .tab { padding: 8px 20px; border-radius: 20px; border: 1.5px solid #cbd5e1; background: #fff; color: #64748b; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.18s; }
+  .tab:hover { border-color: #3b82f6; color: #3b82f6; }
+  .tab.active { background: #3b82f6; border-color: #3b82f6; color: #fff; font-weight: 700; }
+  .insight-banner { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; display: flex; gap: 32px; flex-wrap: wrap; align-items: center; }
+  .insight-item { display: flex; flex-direction: column; }
+  .insight-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .insight-value { font-size: 26px; font-weight: 800; color: #fff; }
+  .insight-pill { background: #22c55e22; color: #22c55e; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 10px; margin-top: 4px; display: inline-block; }
+  .insight-pill.warn { background: #f59e0b22; color: #f59e0b; }
+  .insight-divider { width: 1px; background: #334155; align-self: stretch; }
+  .story-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+  .story-card { background: #fff; border-radius: 12px; padding: 18px 20px; border: 1px solid #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .story-number { font-size: 32px; font-weight: 900; margin-bottom: 4px; }
+  .story-desc { font-size: 13px; color: #475569; line-height: 1.5; }
+  .story-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .kpi { background: #fff; border-radius: 12px; padding: 18px 20px; border: 1px solid #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .kpi-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; font-weight: 600; }
+  .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; }
+  .kpi-sub { font-size: 12px; color: #64748b; margin-top: 5px; }
+  .kpi-icon { font-size: 20px; margin-bottom: 8px; }
+  .green { color: #16a34a; } .red { color: #dc2626; } .blue { color: #2563eb; } .purple { color: #7c3aed; }
+  .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .trend-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .chart-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .chart-title { font-size: 14px; font-weight: 700; color: #0f172a; }
+  .chart-hint { font-size: 11px; color: #94a3b8; }
+  canvas { max-height: 220px; }
+  .table-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { color: #64748b; text-align: left; padding: 8px 12px; border-bottom: 2px solid #f1f5f9; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f8fafc; color: #334155; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .badge-green { background: #dcfce7; color: #16a34a; }
+  .badge-red { background: #fee2e2; color: #dc2626; }
+  .badge-yellow { background: #fef9c3; color: #ca8a04; }
+  .footer { font-size: 11px; color: #94a3b8; text-align: center; margin-top: 8px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+  .footer span { font-weight: 700; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="title-block">
+      <h1>📦 Amazon Review Network</h1>
+      <p>Financial Performance Dashboard · Operations & Revenue Overview</p>
+    </div>
+    <div class="role-badge">Managed by Adrian Cardinoza</div>
+  </div>
+</div>
+
+<div class="tab-row">
+  <button class="tab active" onclick="setYear('2025', this)">2025 Full Year</button>
+  <button class="tab" onclick="setYear('2024', this)">2024 Full Year</button>
+  <button class="tab" onclick="setYear('compare', this)">📊 Growth Story</button>
+</div>
+
+<div class="insight-banner" id="insight-banner"></div>
+<div class="story-row" id="story-row"></div>
+<div class="kpi-row" id="kpi-row"></div>
+
+<div class="charts-grid">
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title" id="chart1-title">Monthly Revenue vs Profit</div>
+      <div class="chart-hint">Hover bars for exact values</div>
+    </div>
+    <canvas id="chart1"></canvas>
+  </div>
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title">Profit Margin by Month</div>
+      <div class="chart-hint">🟢 ≥25% &nbsp;🟡 0–25% &nbsp;🔴 Loss</div>
+    </div>
+    <canvas id="chart2"></canvas>
+  </div>
+</div>
+
+<div class="trend-row">
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title">Where the Money Goes</div>
+      <div class="chart-hint">Annual cost breakdown</div>
+    </div>
+    <canvas id="chart3"></canvas>
+  </div>
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title" id="chart4-title">Running Revenue Total</div>
+      <div class="chart-hint">Cumulative across the year</div>
+    </div>
+    <canvas id="chart4"></canvas>
+  </div>
+</div>
+
+<div class="table-card">
+  <div class="chart-header" style="margin-bottom:14px">
+    <div class="chart-title">Month-by-Month Breakdown</div>
+    <div class="chart-hint">All figures in USD</div>
+  </div>
+  <table id="monthly-table"></table>
+</div>
+
+<div class="footer">Amazon Review Network · Vine Reviewer Program · <span>Adrian Cardinoza</span> · Operations & Revenue Management</div>
+
+<script>
+const data = {
+  "2025": {
+    months:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    netSales:[143401.95,135955.41,108127.63,131356.96,166179.59,128494.17,176553.80,157211.22,154380.82,145252.23,144870.20,124163.31],
+    cogs:[69353.51,71771.54,86704.10,90970.97,92150.74,95939.49,82674.74,82799.34,101367.74,126689.41,77271.74,50003.74],
+    netProfit:[70937.55,61072.98,18042.11,37210.71,70968.40,30656.00,90214.79,70851.43,49952.63,15502.37,64538.01,71099.12],
+    profitPct:[49.47,44.92,16.69,28.33,42.71,23.86,51.10,45.07,32.36,10.67,44.55,57.26],
+    productCosts:[41026.53,43370.69,58700.36,62967.23,64147.00,67846.00,54671.00,54795.60,73364.00,98685.67,49268.00,22000.00],
+    opsSalaries:[28003.74,28003.74,28003.74,28003.74,28003.74,28003.74,28003.74,28003.74,28003.74,28003.74,28003.74,28003.74],
+    opExpenses:[3110.89,3110.89,3110.89,3175.28,3060.45,3203.39,3713.53,3560.45,3060.45,3060.45,3060.45,3060.45],
+  },
+  "2024": {
+    months:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+    netSales:[18986.33,18174.15,21635.20,28255.86,35941.73,33701.18,60388.55,73393.12,95031.85,78759.43,96337.94,92014.08],
+    cogs:[15728.15,13384.54,25773.23,22541.57,26495.55,34536.48,42581.49,44269.93,54442.69,62470.15,67055.33,65062.65],
+    netProfit:[3258.18,4789.61,-3594.53,6003.36,9147.00,-850.50,17788.45,26626.25,40573.96,16212.24,29140.11,26885.79],
+    profitPct:[17.16,26.35,-16.61,21.25,25.45,-2.52,29.46,36.28,42.70,20.58,30.25,29.22],
+    productCosts:[12575.36,10234.79,16919.23,13084.00,15974.39,23466.00,32054.08,32977.00,43041.43,51211.00,54962.95,53185.00],
+    opsSalaries:[3139.80,3139.80,8854.00,9386.00,10261.00,10261.00,10255.00,10649.00,11116.00,11116.00,11843.00,11843.00],
+    opExpenses:[0,0,79.92,22.18,25.67,18.61,27.94,15.20,77.04,142.50,65.64,0],
+  }
+};
+
+let c1,c2,c3,c4;
+const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
+const pct=n=>n.toFixed(1)+'%';
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const avg=a=>sum(a)/a.length;
+const cumul=a=>{let r=[],t=0;a.forEach(v=>{t+=v;r.push(t);});return r;};
+
+function marginBadge(v){
+  if(v<0) return `<span class="badge badge-red">Loss ${pct(v)}</span>`;
+  if(v<25) return `<span class="badge badge-yellow">${pct(v)}</span>`;
+  return `<span class="badge badge-green">${pct(v)}</span>`;
+}
+
+function setYear(y,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderAll(y);
+}
+
+function renderBanner(y){
+  const d25=data["2025"],d24=data["2024"];
+  let h='';
+  if(y==='2025'){
+    const bi=d25.netSales.indexOf(Math.max(...d25.netSales));
+    const wi=d25.profitPct.indexOf(Math.min(...d25.profitPct));
+    h=`<div class="insight-item"><div class="insight-label">Total Revenue</div><div class="insight-value">${fmt(sum(d25.netSales))}</div><div class="insight-pill">Full Year 2025</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">Total Profit</div><div class="insight-value">${fmt(sum(d25.netProfit))}</div><div class="insight-pill">After all costs</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">Best Month</div><div class="insight-value">${d25.months[bi]}</div><div class="insight-pill">${fmt(d25.netSales[bi])}</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">Lowest Margin</div><div class="insight-value">${d25.months[wi]}</div><div class="insight-pill warn">${pct(d25.profitPct[wi])}</div></div>`;
+  } else if(y==='2024'){
+    const bi=d24.netSales.indexOf(Math.max(...d24.netSales));
+    h=`<div class="insight-item"><div class="insight-label">Total Revenue</div><div class="insight-value">${fmt(sum(d24.netSales))}</div><div class="insight-pill">Full Year 2024</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">Total Profit</div><div class="insight-value">${fmt(sum(d24.netProfit))}</div><div class="insight-pill">After all costs</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">Best Month</div><div class="insight-value">${d24.months[bi]}</div><div class="insight-pill">${fmt(d24.netSales[bi])}</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">Avg Monthly Revenue</div><div class="insight-value">${fmt(avg(d24.netSales))}</div><div class="insight-pill">Per month</div></div>`;
+  } else {
+    const s25=sum(d25.netSales),s24=sum(d24.netSales),p25=sum(d25.netProfit),p24=sum(d24.netProfit);
+    h=`<div class="insight-item"><div class="insight-label">Revenue Growth</div><div class="insight-value">+${pct((s25-s24)/s24*100)}</div><div class="insight-pill">2024 → 2025</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">Profit Growth</div><div class="insight-value">+${pct((p25-p24)/p24*100)}</div><div class="insight-pill">Year over year</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">2024 Revenue</div><div class="insight-value">${fmt(s24)}</div></div>
+    <div class="insight-divider"></div>
+    <div class="insight-item"><div class="insight-label">2025 Revenue</div><div class="insight-value">${fmt(s25)}</div></div>`;
+  }
+  document.getElementById('insight-banner').innerHTML=h;
+}
+
+function renderStory(y){
+  const d25=data["2025"],d24=data["2024"];
+  let h='';
+  if(y==='2025'){
+    const hm=d25.profitPct.filter(v=>v>=40).length;
+    h=`<div class="story-card"><div class="story-label">Peak Performance</div><div class="story-number blue">Jul 2025</div><div class="story-desc">Highest revenue month at <strong>${fmt(176553.80)}</strong> with a <strong>51% profit margin</strong> — the network's best single month on record.</div></div>
+    <div class="story-card"><div class="story-label">Consistent Profitability</div><div class="story-number green">${hm} / 12</div><div class="story-desc">Months where profit margin exceeded <strong>40%</strong>. The business ran efficiently for most of the year with zero loss months.</div></div>
+    <div class="story-card"><div class="story-label">Watch Point</div><div class="story-number" style="color:#f59e0b">Oct 2025</div><div class="story-desc">Lowest margin month at <strong>10.67%</strong> due to a spike in product costs — identified, flagged, and corrected by year-end.</div></div>`;
+  } else if(y==='2024'){
+    h=`<div class="story-card"><div class="story-label">Growth Trajectory</div><div class="story-number blue">5×</div><div class="story-desc">Revenue grew <strong>5× from Jan to Nov 2024</strong> — from $18K to $96K monthly as the network scaled operations.</div></div>
+    <div class="story-card"><div class="story-label">Turnaround Point</div><div class="story-number green">Jul 2024</div><div class="story-desc">First month crossing <strong>$60K in revenue</strong> and achieving a stable margin above 29% after a rocky first half.</div></div>
+    <div class="story-card"><div class="story-label">Lesson Learned</div><div class="story-number" style="color:#f59e0b">Mar 2024</div><div class="story-desc">Only loss month that year (<strong>-$3.5K</strong>). Root cause: high product costs vs. low sales volume — corrected in Q2.</div></div>`;
+  } else {
+    const s25=sum(d25.netSales),s24=sum(d24.netSales);
+    h=`<div class="story-card"><div class="story-label">Revenue Scaled</div><div class="story-number blue">+170%</div><div class="story-desc">Total revenue grew from <strong>${fmt(s24)}</strong> in 2024 to <strong>${fmt(s25)}</strong> in 2025 — driven by ops optimization and client expansion.</div></div>
+    <div class="story-card"><div class="story-label">Margin Improved</div><div class="story-number green">+14pts</div><div class="story-desc">Average profit margin rose from <strong>${pct(avg(d24.profitPct))}</strong> in 2024 to <strong>${pct(avg(d25.profitPct))}</strong> in 2025 — the team got smarter with costs.</div></div>
+    <div class="story-card"><div class="story-label">Losses Eliminated</div><div class="story-number" style="color:#7c3aed">Zero</div><div class="story-desc">2024 had <strong>2 loss months</strong>. By 2025, improved workflows and SOP controls meant <strong>zero loss months</strong> all year.</div></div>`;
+  }
+  document.getElementById('story-row').innerHTML=h;
+}
+
+function renderKPIs(y){
+  const d=y==='compare'?data["2025"]:data[y];
+  const d24=data["2024"];
+  let h='';
+  if(y==='compare'){
+    const s25=sum(d.netSales),s24=sum(d24.netSales);
+    h=`<div class="kpi"><div class="kpi-icon">📈</div><div class="kpi-label">2025 Revenue</div><div class="kpi-value blue">${fmt(s25)}</div><div class="kpi-sub">vs ${fmt(s24)} in 2024</div></div>
+    <div class="kpi"><div class="kpi-icon">💰</div><div class="kpi-label">2025 Net Profit</div><div class="kpi-value green">${fmt(sum(d.netProfit))}</div><div class="kpi-sub">vs ${fmt(sum(d24.netProfit))} in 2024</div></div>
+    <div class="kpi"><div class="kpi-icon">📊</div><div class="kpi-label">Avg Margin 2025</div><div class="kpi-value purple">${pct(avg(d.profitPct))}</div><div class="kpi-sub">vs ${pct(avg(d24.profitPct))} in 2024</div></div>
+    <div class="kpi"><div class="kpi-icon">🚀</div><div class="kpi-label">Revenue Growth</div><div class="kpi-value green">+${pct((s25-s24)/s24*100)}</div><div class="kpi-sub">Year over year</div></div>`;
+  } else {
+    const bi=d.netSales.indexOf(Math.max(...d.netSales));
+    h=`<div class="kpi"><div class="kpi-icon">📈</div><div class="kpi-label">Total Revenue</div><div class="kpi-value blue">${fmt(sum(d.netSales))}</div><div class="kpi-sub">All 12 months combined</div></div>
+    <div class="kpi"><div class="kpi-icon">💰</div><div class="kpi-label">Total Profit</div><div class="kpi-value green">${fmt(sum(d.netProfit))}</div><div class="kpi-sub">After all costs</div></div>
+    <div class="kpi"><div class="kpi-icon">📊</div><div class="kpi-label">Avg Profit Margin</div><div class="kpi-value purple">${pct(avg(d.profitPct))}</div><div class="kpi-sub">How much we keep per $1 earned</div></div>
+    <div class="kpi"><div class="kpi-icon">🏆</div><div class="kpi-label">Best Month</div><div class="kpi-value" style="color:#f59e0b">${d.months[bi]}</div><div class="kpi-sub">${fmt(d.netSales[bi])} in revenue</div></div>`;
+  }
+  document.getElementById('kpi-row').innerHTML=h;
+}
+
+function renderCharts(y){
+  if(c1)c1.destroy(); if(c2)c2.destroy(); if(c3)c3.destroy(); if(c4)c4.destroy();
+  const months=data["2025"].months;
+  const isComp=(y==='compare');
+  const d=isComp?data["2025"]:data[y];
+
+  document.getElementById('chart1-title').textContent=isComp?'2024 vs 2025 — Monthly Revenue':'Monthly Revenue vs Profit';
+  const ds1=isComp?[
+    {label:'2025 Revenue',data:data["2025"].netSales,borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.08)',fill:true,tension:0.4,pointRadius:3,pointHoverRadius:5},
+    {label:'2024 Revenue',data:data["2024"].netSales,borderColor:'#93c5fd',borderDash:[5,5],backgroundColor:'transparent',tension:0.4,pointRadius:2},
+  ]:[
+    {label:'Revenue',data:d.netSales,borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.08)',fill:true,tension:0.4,pointRadius:4,pointHoverRadius:6},
+    {label:'Profit',data:d.netProfit,borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.08)',fill:true,tension:0.4,pointRadius:4,pointHoverRadius:6},
+  ];
+  c1=new Chart(document.getElementById('chart1'),{
+    type:'line',data:{labels:months,datasets:ds1},
+    options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:'#475569',boxWidth:12,font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8',font:{size:11}},grid:{color:'#f1f5f9'}},y:{ticks:{color:'#94a3b8',font:{size:11},callback:v=>'$'+v.toLocaleString()},grid:{color:'#f1f5f9'}}}}
+  });
+
+  const gp=isComp?data["2025"].profitPct:d.profitPct;
+  c2=new Chart(document.getElementById('chart2'),{
+    type:'bar',
+    data:{labels:months,datasets:[{label:'Profit Margin %',data:gp,backgroundColor:gp.map(v=>v<0?'#fca5a5':v<25?'#fde68a':'#86efac'),borderRadius:5}]},
+    options:{responsive:true,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#94a3b8',font:{size:11}},grid:{color:'#f1f5f9'}},y:{ticks:{color:'#94a3b8',font:{size:11},callback:v=>v+'%'},grid:{color:'#f1f5f9'}}}}
+  });
+
+  const dd=isComp?data["2025"]:d;
+  c3=new Chart(document.getElementById('chart3'),{
+    type:'doughnut',
+    data:{labels:['Product Costs','Team Salaries','Operating Expenses'],
+      datasets:[{data:[sum(dd.productCosts),sum(dd.opsSalaries),sum(dd.opExpenses)],backgroundColor:['#3b82f6','#a78bfa','#f59e0b'],borderWidth:0,hoverOffset:8}]},
+    options:{responsive:true,cutout:'62%',plugins:{legend:{position:'bottom',labels:{color:'#475569',boxWidth:12,font:{size:11},padding:14}}}}
+  });
+
+  document.getElementById('chart4-title').textContent=isComp?'Cumulative Revenue: 2024 vs 2025':'Running Revenue Total';
+  const ds4=isComp?[
+    {label:'2025',data:cumul(data["2025"].netSales),borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.08)',fill:true,tension:0.4,pointRadius:2},
+    {label:'2024',data:cumul(data["2024"].netSales),borderColor:'#93c5fd',borderDash:[5,5],backgroundColor:'transparent',tension:0.4,pointRadius:2},
+  ]:[{label:'Cumulative Revenue',data:cumul(d.netSales),borderColor:'#7c3aed',backgroundColor:'rgba(124,58,237,0.08)',fill:true,tension:0.4,pointRadius:3}];
+  c4=new Chart(document.getElementById('chart4'),{
+    type:'line',data:{labels:months,datasets:ds4},
+    options:{responsive:true,plugins:{legend:{labels:{color:'#475569',boxWidth:12,font:{size:11}}}},
+      scales:{x:{ticks:{color:'#94a3b8',font:{size:11}},grid:{color:'#f1f5f9'}},y:{ticks:{color:'#94a3b8',font:{size:11},callback:v=>'$'+v.toLocaleString()},grid:{color:'#f1f5f9'}}}}
+  });
+}
+
+function renderTable(y){
+  const d=y==='compare'?data["2025"]:data[y];
+  const rows=d.months.map((m,i)=>`<tr>
+    <td><strong>${m}</strong></td>
+    <td>${fmt(d.netSales[i])}</td>
+    <td>${fmt(d.cogs[i])}</td>
+    <td class="${d.netProfit[i]<0?'red':'green'}">${fmt(d.netProfit[i])}</td>
+    <td>${marginBadge(d.profitPct[i])}</td>
+  </tr>`).join('');
+  document.getElementById('monthly-table').innerHTML=`<tr><th>Month</th><th>Revenue</th><th>Total Costs</th><th>Net Profit</th><th>Profit Margin</th></tr>${rows}`;
+}
+
+function renderAll(y='2025'){
+  renderBanner(y); renderStory(y); renderKPIs(y); renderCharts(y); renderTable(y);
+}
+renderAll();
+</script>
+</body>
+</html>
